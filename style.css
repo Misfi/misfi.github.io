@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@500&display=swap');
+
+:root {
+    --background: darkslateblue;
+    --minecard: #c2c3c8;
+}
+
+* {
+    font-family: 'Jura', sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    background: var(--background);
+}
+
+main {
+    height: calc(100vh - 160px);
+}
+
+h1, h4 {
+    margin-bottom: 0;
+    color: white;
+}
+
+nav {
+    height: 80px;
+}
+
+footer {
+    bottom: 0;
+    width: 100%;
+    position: sticky;
+    height: 80px;
+}
+
+.card-header {
+    padding: 12px;
+    background: var(--minecard);
+}
+
+.card {
+    padding: 3px;
+    background: var(--minecard);
+}
+
+.card-body {
+    padding: 0;
+}
+
+td.uncovered {
+    background: #e3e3e3;
+}
+
+td:hover {
+    background: #e3e3e3;
+    cursor: pointer;
+}
+
+td {
+    width: 45px;
+    height: 45px;
+    border: 3px solid #e3e3e3;
+    background: var(--minecard);
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    justify-items: center;
+}
+
+.custom-select {
+    width: 150px;
+}
+
+.gameStats {
+    width: 150px;
+    background: white;
+}
+
+.gameStats > div {
+    height: max-content;
+    margin: auto;
+}
+
+.emoji {
+    margin:auto;
+    font-size: 25px;
+}
+
+a:hover {
+    text-decoration: none;
+}
