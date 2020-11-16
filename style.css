@@ -62,10 +62,13 @@ td:hover {
 }
 
 td {
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
     border: 3px solid #e3e3e3;
     background: var(--minecard);
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
 }
 
 .flex {
@@ -76,11 +79,11 @@ td {
 }
 
 .custom-select {
-    width: 150px;
+    width: 200px;
 }
 
 .gameStats {
-    width: 150px;
+    width: 200px;
     background: white;
 }
 
@@ -92,8 +95,41 @@ td {
 .emoji {
     margin:auto;
     font-size: 25px;
+    cursor: pointer;
 }
 
 a:hover {
     text-decoration: none;
+}
+
+.cell-1 {
+    color: blue;
+}
+
+.cell-2 {
+    color: green;
+}
+
+.cell-3 {
+    color: red;
+}
+
+.cell-4 {
+    color: purple;
+}
+
+.cell-5 {
+    color: brown;
+}
+
+.cell-6 {
+    color: teal;
+}
+
+.cell-7 {
+    color: black;
+}
+
+.cell-8 {
+    color: grey;
 }

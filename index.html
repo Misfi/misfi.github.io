@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Minesweeper</title>
     <meta charset="UTF-8">
@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <nav class="text-center">
     <h1>MINESWEEPER</h1>
 </nav>
@@ -17,119 +18,20 @@
     <div class="card">
       <div class="card-header flex">
           <select class="custom-select">
-              <option value="0" selected>Beginner</option>
-              <option value="1">Intermediate</option>
-              <option value="2">Expert</option>
-              <option value="3">Custom</option>
+              <option value="beginner" selected>Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="expert">Expert</option>
+              <option value="custom">Custom</option>
           </select>
-          <a class="emoji" href="#">😎</a>
+          <div class="emoji" id="emojiRestart">😎</div>
           <div class="flex border rounded gameStats">
-              <div>🚩 <span>00</span></div>
-              <div>⏰ <span>000</span></div>
+              <div>⏰ <span id="timeCounter">0</span></div>
+              <div>❓ <span id="remainingCellsCounter">000</span></div>
+              <div>🚩 <span id="addedFlagsCounter">0</span></div>
           </div>
-
       </div>
       <div class="card-body">
-          <table>
-              <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td class="uncovered"></td>
-              </tr>
-              <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-              </tr>
-              <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-              </tr>
-              <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-              </tr>
-              <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-              </tr>
-              <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-              </tr>
-              <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-              </tr>
-              <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-              </tr>
-              <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-              </tr>
+          <table class="mineTable">
           </table>
       </div>
     </div>
@@ -137,7 +39,7 @@
 </main>
 
 <footer class="text-center">
-  <h4>BOTTOM TEXT</h4>
+  <h4>...</h4>
 </footer>
 
 <script src="script.js" type="text/javascript"></script>
