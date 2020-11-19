@@ -15,7 +15,7 @@ class Cell {
     }
 }
 
-let diff = difficulty.BEGINNER;
+let diff = difficulty.INTERMEDIATE;
 let remainingCells = diff.rows * diff.columns - diff.mines;
 const minefield = [];
 let fillStack = [];
@@ -23,15 +23,30 @@ let timer = 0;
 let isGameOn = false;
 let timerID;
 
-initMinefield();
-initMines();
-createMinefieldHTML();
+initGame();
 
-document.querySelector("select").onchange = restartGame;
-document.querySelector("table").addEventListener("click", leftClick);
-document.querySelector("table").addEventListener("contextmenu", rightClick);
-document.getElementById("emojiRestart").addEventListener("click", restartGame);
-document.getElementById("remainingCellsCounter").innerText = String(remainingCells);
+function initGame() {
+    initElements();
+    initMinefield();
+    initMines();
+    createMinefieldHTML();
+}
+
+function wipeMines() {
+    for (let i = 0; i < diff.columns; i++) {
+        for (let j = 0; j < diff.rows; j++) {
+            minefield[i][j] = new Cell();
+        }
+    }
+}
+
+function initElements() {
+    document.querySelector("select").onchange = restartGame;
+    document.querySelector("table").addEventListener("click", leftClick);
+    document.querySelector("table").addEventListener("contextmenu", rightClick);
+    document.getElementById("emojiRestart").addEventListener("click", restartGame);
+    document.getElementById("remainingCellsCounter").innerText = String(remainingCells);
+}
 
 function initMinefield() {
     for (let i = 0; i < diff.rows; i++) {
@@ -96,34 +111,32 @@ function createMinefieldHTML() {
 
 function uncoverSingleCell(X, Y) {
     let uncoveredNode = document.createTextNode(minefield[X][Y].displayText);
+    let cell = document.getElementById(`cell-${X}-${Y}`);
 
-    document.getElementById(`cell-${X}-${Y}`).appendChild(uncoveredNode);
-    document.getElementById(`cell-${X}-${Y}`).classList.add("uncovered");
-    document.getElementById(`cell-${X}-${Y}`).classList.add(`cell-${minefield[X][Y].value}`);
+    cell.appendChild(uncoveredNode);
+    cell.classList.add("uncovered");
+    cell.classList.add(`cell-${minefield[X][Y].value}`);
     minefield[X][Y].isUncovered = true;
     updateRemainingCellsCounter();
+
+    if (minefield[X][Y].value === 0) {
+        uncoverAdjacentCells(X, Y);
+    }
 }
 
-function uncoverMultipleCells(X, Y) {
-    fillStack.push([X, Y]);
+function uncoverAdjacentCells(X, Y) {
+    let minX = Number(X) - 1;
+    let maxX = Number(X) + 1;
+    let minY = Number(Y) - 1;
+    let maxY = Number(Y) + 1;
 
-    while (fillStack.length) {
-        let [X, Y] = fillStack.pop();
-
-        if (!isWithinBounds(X, Y) ||
-            minefield[X][Y].isMine ||
-            minefield[X][Y].isUncovered
-        ) {
-            continue;
+    for (let i = minX; i <= maxX; i++) {
+        for (let j = minY; j <= maxY; j++) {
+            if (isWithinBounds(i, j) && !minefield[i][j].isUncovered) {
+                console.log("Uncovering: " + i + " " + j);
+                uncoverSingleCell(i, j);
+            }
         }
-
-        if (isWithinBounds(X, Y) && minefield[X][Y].value > 0) {
-            uncoverSingleCell(X, Y);
-        }
-        uncoverMultipleCells(X + 1, Y);
-        uncoverMultipleCells(X - 1, Y);
-        uncoverMultipleCells(X, Y + 1);
-        uncoverMultipleCells(X, Y - 1);
     }
 }
 
@@ -229,10 +242,25 @@ function restartGame(event) {
     let target = event.target.outerHTML;
 
     if (target.includes("emoji")) {
-
+        console.log("Resetting via button");
     } else {
-        
+        console.log("Resetting via select");
+        let selectValue  = document.querySelector('select').value.toUpperCase();
+        diff = difficulty[selectValue];
     }
+    document.querySelector(".mineTable").innerHTML = "";
+
+    clearInterval(timerID);
+
+    timer = 0;
+    isGameOn = false;
+    document.getElementById("timeCounter").innerText = '0';
+    remainingCells = diff.rows * diff.columns - diff.mines;
+    document.getElementById("remainingCellsCounter").innerText = String(remainingCells);
+    document.getElementById("addedFlagsCounter").innerText = '0';
+    wipeMines();
+    initElements();
+    initGame();
 }
 
 function preventClicking() {
@@ -240,4 +268,5 @@ function preventClicking() {
     document.querySelector("table").removeEventListener("contextmenu", rightClick);
     //todo: remove hover
     //todo: change eventListener for rightClick
+    //todo: fail w konsoli po zmianie na custom po f5
 }
