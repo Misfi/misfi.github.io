@@ -15,7 +15,7 @@ class Cell {
     }
 }
 
-let diff = difficulty.INTERMEDIATE;
+let diff = difficulty.BEGINNER;
 let remainingCells = diff.rows * diff.columns - diff.mines;
 const minefield = [];
 let fillStack = [];
@@ -269,4 +269,8 @@ function preventClicking() {
     //todo: remove hover
     //todo: change eventListener for rightClick
     //todo: fail w konsoli po zmianie na custom po f5
+    //todo: gray background with results after win
+    //todo: boom emojis
+    //todo: emoji change face on click
+    //todo: fix firefox toElement (target)
 }
