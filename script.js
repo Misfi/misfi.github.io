@@ -11,14 +11,13 @@ class Cell {
         this.isFlagged = false;
         this.isMine = false;
         this.value = 0;
-        this.displayText = " ";
+        this.displayText = "";
     }
 }
 
 let diff = difficulty.BEGINNER;
 let remainingCells = diff.rows * diff.columns - diff.mines;
 const minefield = [];
-let fillStack = [];
 let timer = 0;
 let isGameOn = false;
 let timerID;
@@ -33,9 +32,9 @@ function initGame() {
 }
 
 function wipeMines() {
-    for (let i = 0; i < diff.columns; i++) {
-        for (let j = 0; j < diff.rows; j++) {
-            minefield[i][j] = new Cell();
+    for (let row = 0; row < diff.columns; row++) {
+        for (let column = 0; column < diff.rows; column++) {
+            minefield[row][column] = new Cell();
         }
     }
 }
@@ -49,26 +48,26 @@ function initElements() {
 }
 
 function initMinefield() {
-    for (let i = 0; i < diff.rows; i++) {
+    for (let row = 0; row < diff.rows; row++) {
         minefield.push([]);
-        for (let j = 0; j < diff.columns; j++) {
-            minefield[i][j] = new Cell();
+        for (let column = 0; column < diff.columns; column++) {
+            minefield[row][column] = new Cell();
         }
     }
 }
 
 function initMines() {
     let remainingMines = diff.mines;
-    let X, Y;
+    let row, column;
 
     while (remainingMines) {
-        X = getRandomValue(diff.rows);
-        Y = getRandomValue(diff.columns);
-        if (!minefield[X][Y].isMine) {
-            minefield[X][Y].value = '-1';
-            minefield[X][Y].isMine = true;
-            minefield[X][Y].displayText = '💣';
-            incrementAdjacentCells(X, Y);
+        row = getRandomValue(diff.rows);
+        column = getRandomValue(diff.columns);
+        if (!minefield[row][column].isMine) {
+            minefield[row][column].value = '-1';
+            minefield[row][column].isMine = true;
+            minefield[row][column].displayText = '💣';
+            incrementAdjacentCells(row, column);
             remainingMines--;
         }
     }
@@ -113,6 +112,8 @@ function uncoverSingleCell(X, Y) {
     let uncoveredNode = document.createTextNode(minefield[X][Y].displayText);
     let cell = document.getElementById(`cell-${X}-${Y}`);
 
+    console.log("Uncovering cell " + X + Y);
+
     cell.appendChild(uncoveredNode);
     cell.classList.add("uncovered");
     cell.classList.add(`cell-${minefield[X][Y].value}`);
@@ -133,7 +134,6 @@ function uncoverAdjacentCells(X, Y) {
     for (let i = minX; i <= maxX; i++) {
         for (let j = minY; j <= maxY; j++) {
             if (isWithinBounds(i, j) && !minefield[i][j].isUncovered) {
-                console.log("Uncovering: " + i + " " + j);
                 uncoverSingleCell(i, j);
             }
         }
@@ -273,4 +273,8 @@ function preventClicking() {
     //todo: boom emojis
     //todo: emoji change face on click
     //todo: fix firefox toElement (target)
+    //todo: rewrite scss
+    //todo: rewrite with jQuery
+    //todo: rewrite with angular(js)
+    //todo: debug mode
 }
