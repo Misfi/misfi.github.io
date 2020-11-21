@@ -31,14 +31,6 @@ function initGame() {
     createMinefieldHTML();
 }
 
-function wipeMines() {
-    for (let row = 0; row < diff.columns; row++) {
-        for (let column = 0; column < diff.rows; column++) {
-            minefield[row][column] = new Cell();
-        }
-    }
-}
-
 function initElements() {
     document.querySelector("select").onchange = restartGame;
     document.querySelector("table").addEventListener("click", leftClick);
@@ -48,10 +40,18 @@ function initElements() {
 }
 
 function initMinefield() {
-    for (let row = 0; row < diff.rows; row++) {
+    for (let i = 0; i < diff.rows; i++) {
         minefield.push([]);
-        for (let column = 0; column < diff.columns; column++) {
-            minefield[row][column] = new Cell();
+        for (let j = 0; j < diff.columns; j++) {
+            minefield[i][j] = new Cell();
+        }
+    }
+}
+
+function wipeMines() {
+    for (let i = 0; i < diff.columns; i++) {
+        for (let j = 0; j < diff.rows; j++) {
+            minefield[i][j] = new Cell();
         }
     }
 }
@@ -73,9 +73,9 @@ function initMines() {
     }
 }
 
-function incrementAdjacentCells(X, Y) {
-    for (let i = X - 1; i <= X + 1; i++) {
-        for (let j = Y - 1; j <= Y + 1 ; j++) {
+function incrementAdjacentCells(row, column) {
+    for (let i = row - 1; i <= row + 1; i++) {
+        for (let j = column - 1; j <= column + 1 ; j++) {
             if (isWithinBounds(i, j) && !minefield[i][j].isMine) {
                 minefield[i][j].value++;
             }
@@ -108,31 +108,24 @@ function createMinefieldHTML() {
     }
 }
 
-function uncoverSingleCell(X, Y) {
-    let uncoveredNode = document.createTextNode(minefield[X][Y].displayText);
-    let cell = document.getElementById(`cell-${X}-${Y}`);
-
-    console.log("Uncovering cell " + X + Y);
+function uncoverSingleCell(row, column) {
+    let uncoveredNode = document.createTextNode(minefield[row][column].displayText);
+    let cell = document.getElementById(`cell-${row}-${column}`);
 
     cell.appendChild(uncoveredNode);
     cell.classList.add("uncovered");
-    cell.classList.add(`cell-${minefield[X][Y].value}`);
-    minefield[X][Y].isUncovered = true;
+    cell.classList.add(`cell-${minefield[row][column].value}`);
+    minefield[row][column].isUncovered = true;
     updateRemainingCellsCounter();
 
-    if (minefield[X][Y].value === 0) {
-        uncoverAdjacentCells(X, Y);
+    if (minefield[row][column].value === 0) {
+        uncoverAdjacentCells(row, column);
     }
 }
 
-function uncoverAdjacentCells(X, Y) {
-    let minX = Number(X) - 1;
-    let maxX = Number(X) + 1;
-    let minY = Number(Y) - 1;
-    let maxY = Number(Y) + 1;
-
-    for (let i = minX; i <= maxX; i++) {
-        for (let j = minY; j <= maxY; j++) {
+function uncoverAdjacentCells(row, column) {
+    for (let i = row - 1; i <= row + 1; i++) {
+        for (let j = column - 1; j <= column + 1; j++) {
             if (isWithinBounds(i, j) && !minefield[i][j].isUncovered) {
                 uncoverSingleCell(i, j);
             }
@@ -141,54 +134,51 @@ function uncoverAdjacentCells(X, Y) {
 }
 
 function updateRemainingCellsCounter() {
-    remainingCells--;
-    document.getElementById("remainingCellsCounter").innerText = String(remainingCells);
+    document.getElementById("remainingCellsCounter").innerText = String(--remainingCells);
 }
 
 function leftClick(event) {
-    let X, Y;
+    let row, column;
 
     if (event.target.tagName === "TD") {
         let coordinates = event.toElement.id.split("-");
-        X = coordinates[1];
-        Y = coordinates[2];
+        row = Number(coordinates[1]);
+        column = Number(coordinates[2]);
     } else {
         return;
     }
 
-    let cell = minefield[X][Y];
+    let cell = minefield[row][column];
 
     if (!cell.isUncovered && !cell.isFlagged) {
         if (cell.isMine) {
-            uncoverSingleCell(X, Y);
             gameOver();
         } else {
             if (cell.value > 0 && remainingCells === 1) {
-                uncoverSingleCell(X, Y);
                 winGame();
             } else {
                 startTimer();
-                uncoverSingleCell(X, Y);
             }
         }
+        uncoverSingleCell(row, column);
     }
 }
 
 function rightClick(event) {
-    let X, Y;
+    let row, column;
 
     if (event.target.tagName === "TD") {
         let coordinates = event.toElement.id.split("-");
-        X = coordinates[1];
-        Y = coordinates[2];
+        row = coordinates[1];
+        column = coordinates[2];
         event.preventDefault();
     } else {
         return;
     }
 
-    let cell = minefield[X][Y];
+    let cell = minefield[row][column];
     if (!cell.isUncovered) {
-        let element = document.getElementById(`cell-${X}-${Y}`);
+        let element = document.getElementById(`cell-${row}-${column}`);
         let flagCounter = document.getElementById("addedFlagsCounter");
 
         if (element.innerText === '🚩') {
@@ -204,11 +194,12 @@ function rightClick(event) {
     }
 }
 
-function isWithinBounds(X, Y) {
+function isWithinBounds(row, column) {
     return (
-        X < diff.rows &&
-        Y < diff.columns &&
-        X >= 0 && Y >= 0
+        row >= 0 &&
+        row < diff.rows &&
+        column >= 0 &&
+        column < diff.columns
     )
 }
 
