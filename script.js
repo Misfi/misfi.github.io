@@ -12,7 +12,7 @@
 
 //_REFACTORING:
 // scss
-// Query
+// jquery
 // fix html
 // minefield prep
 // loops
