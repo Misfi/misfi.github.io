@@ -1,14 +1,22 @@
-//TODO:
-//fix events on firefox
-//rewrite: css to scss
-//rewrite: js to jQuery
-//debug mode
-//tests
-//replace loops with methods
-//sharing links
-//update html/css
-//refactor whole minefield prep
-//add smooth explosions transition + shaking
+//_ADD:
+// Debug mode
+// Tests
+// Explosion animation
+// -- smooth transform
+// -- shaking
+
+
+//_FIXES:
+// Firefox - events not working
+
+
+//_REFACTORING:
+// scss
+// Query
+// fix html
+// minefield prep
+// loops
+
 
 const DIFFICULTY = {
     beginner: {mines: 10, rows: 8, columns: 8},
