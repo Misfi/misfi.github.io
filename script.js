@@ -38,6 +38,7 @@ let remainingMines = selectedDifficulty.mines;
 let remainingCoveredCells = selectedDifficulty.columns * selectedDifficulty.rows - selectedDifficulty.mines;
 let isGameOn = false;
 let timer = 0;
+let explodeIntervalID;
 let timerIntervalID;
 let mineLocation = [];
 
@@ -300,20 +301,22 @@ function gameOver() {
 
 function uncoverAllMineCells() {
     mineLocation.forEach(function(location) {
-        uncoverSingleCell(location.row, location.column);
+        if (!MINEFIELD[location.row][location.column].isFlagged) {
+            uncoverSingleCell(location.row, location.column);
+        }
     });
 }
 
 function explodeAllMines() {
-    for (let i = 0; i < mineLocation.length; i++) {
-        setTimeout(function() {
-            document.getElementById(`cell-${mineLocation[i].row}-${mineLocation[i].column}`).innerText = '💥';
-        }, 50 * i);
-    }
+    explodeIntervalID = setInterval(function() {
+        if (mineLocation.length) {
+            let location = mineLocation.pop();
+            document.getElementById(`cell-${location.row}-${location.column}`).innerText = '💥';
+        } else {
+            clearInterval(explodeIntervalID);
+        }
+    }, 30);
 }
-
-
-
 
 function winGame() {
     stopTimer();
@@ -332,6 +335,7 @@ function preventClickingAfterGameEnds() {
 function restartGame() {
     stopTimer();
     resetTimer();
+    clearInterval(explodeIntervalID);
 
     isGameOn = false;
     MINEFIELD_TABLE.innerHTML = "";
