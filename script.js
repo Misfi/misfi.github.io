@@ -1,28 +1,28 @@
 //TODO:
-//change eventListener for rightClick
-//gray background with results after win
 //boom emojis
-//fix firefox toElement (target)
-//rewrite scss
-//rewrite with jQuery
+//fix events on firefox
+//rewrite: css to scss
+//rewrite: js to jQuery
 //debug mode
-//refactor elements to variables
-//update html
-//change emoji on win
 //tests
-//custom mode
-//animacje jak w MS minesweepera
 //replace loops with methods
 //sharing links
-//gra nie stopuje po odkryciu wszystkich pol na beginnerze po f5 - nie zawsze
-//context menu odpala sie na odkrytych polach
-// https://airbnb.io/javascript/
+//update html/css
+//refactor whole minefield prep
 
 const DIFFICULTY = {
-    beginner: {mines: 10, rows: 10, columns: 10},
-    intermediate: {mines: 40, rows: 15, columns: 15},
+    beginner: {mines: 10, rows: 8, columns: 8},
+    intermediate: {mines: 40, rows: 16, columns: 16},
     expert: {mines: 99, rows: 16, columns: 30},
-    custom: {}
+    custom: {minimumMines: 1, minimumRows: 3, minimumColumns: 8}
+}
+
+class Cell {
+    isUncovered = false;
+    isFlagged = false;
+    isMine = false;
+    value = 0;
+    displayText = "";
 }
 
 const MINEFIELD_TABLE = document.querySelector(".mineTable");
@@ -40,17 +40,9 @@ let isGameOn = false;
 let timer = 0;
 let timerIntervalID;
 
-class Cell {
-    isUncovered = false;
-    isFlagged = false;
-    isMine = false;
-    value = 0;
-    displayText = "";
-}
+initializeGame();
 
-prepareGame();
-
-function prepareGame() {
+function initializeGame() {
     switchEmojiToCool();
     createEventListeners();
     createMinefield();
@@ -67,50 +59,8 @@ function createEventListeners() {
     MINEFIELD_TABLE.addEventListener("contextmenu", rightClick);
     MINEFIELD_TABLE.addEventListener("mousedown", switchEmojiToScared);
     APP_BODY.addEventListener("mouseup", switchEmojiToCool);
+    document.getElementById("customGameStartButton").addEventListener("click", startCustomGame);
 }
-
-function preventClickingAfterGameEnds() {
-    MINEFIELD_TABLE.removeEventListener("click", leftClick);
-    MINEFIELD_TABLE.removeEventListener("contextmenu", rightClick);
-    MINEFIELD_TABLE.addEventListener("contextmenu", (event) => event.preventDefault());
-    MINEFIELD_TABLE.removeEventListener("mousedown", switchEmojiToScared);
-    APP_BODY.removeEventListener("mouseup", switchEmojiToCool);
-}
-
-
-
-function gameOver() {
-    stopTimer(timerIntervalID);
-    preventClickingAfterGameEnds();
-    console.log("GAME OVER!");
-    RESTART_BUTTON.innerText = '☠️';
-    //TODO: dodac wybuchy idace naokolo
-}
-
-function winGame() {
-    stopTimer(timerIntervalID);
-    RESTART_BUTTON.innerText = '🏆';
-    preventClickingAfterGameEnds();
-    console.log("YOU WIN!");
-}
-
-function restartGame() {
-    stopTimer();
-    resetTimer();
-
-    isGameOn = false;
-    MINEFIELD_TABLE.innerHTML = "";
-    remainingMines = selectedDifficulty.mines;
-    REMAINING_MINES_COUNTER.innerText = String(remainingMines);
-    remainingCoveredCells = selectedDifficulty.columns * selectedDifficulty.rows - selectedDifficulty.mines;
-
-    wipeMines();
-    preventClickingAfterGameEnds();
-    createEventListeners();
-    prepareGame();
-}
-
-// ########################################################################################################
 
 function createMinefield() {
     for (let i = 0; i < selectedDifficulty.rows; i++) {
@@ -186,13 +136,39 @@ function wipeMines() {
 }
 
 function switchDifficulty() {
-    selectedDifficulty = DIFFICULTY[DIFFICULTY_SELECTOR.value];
-    restartGame();
+
+    if (DIFFICULTY_SELECTOR.value === "custom") {
+        $('#customDifficultyModal').modal('show');
+        DIFFICULTY_SELECTOR.selectedIndex = 0;
+    } else {
+        selectedDifficulty = DIFFICULTY[DIFFICULTY_SELECTOR.value];
+        restartGame();
+        DIFFICULTY_SELECTOR.selectedIndex = 0;
+    }
+
 }
 
 function startGame() {
     isGameOn = true;
     startTimer();
+}
+
+function startCustomGame(event) {
+    selectedDifficulty.mines = document.getElementById("customGameInputMines").value;
+    selectedDifficulty.rows = document.getElementById("customGameInputRows").value;
+    selectedDifficulty.columns = document.getElementById("customGameInputColumns").value;
+
+    if (
+        selectedDifficulty.mines < DIFFICULTY.custom.minimumMines
+        || selectedDifficulty.rows < DIFFICULTY.custom.minimumRows
+        || selectedDifficulty.columns < DIFFICULTY.custom.minimumColumns
+    ) {
+        return;
+    }
+
+    $('#customDifficultyModal').modal('hide');
+    event.preventDefault();
+    restartGame();
 }
 
 function startTimer() {
@@ -238,13 +214,12 @@ function leftClick(event) {
     if (event.target.tagName !== "TD") {
         return;
     }
+
     const coordinates = event.toElement.id.split("-");
     const row = Number(coordinates[1]);
     const column = Number(coordinates[2]);
     const cell = MINEFIELD[row][column];
 
-    //todo: remove log
-    console.log(remainingCoveredCells);
     if (!cell.isUncovered && !cell.isFlagged) {
         if (cell.isMine) {
             gameOver();
@@ -291,7 +266,7 @@ function uncoverSingleCell(row, column) {
     cell.classList.add(`cell-${MINEFIELD[row][column].value}`);
 
     MINEFIELD[row][column].isUncovered = true;
-    remainingCoveredCells--;
+    --remainingCoveredCells;
 
     if (MINEFIELD[row][column].value === 0) {
         uncoverAdjacentCells(row, column);
@@ -306,4 +281,40 @@ function uncoverAdjacentCells(row, column) {
             }
         }
     }
+}
+
+function gameOver() {
+    stopTimer();
+    preventClickingAfterGameEnds();
+    RESTART_BUTTON.innerText = '☠️';
+}
+
+function winGame() {
+    stopTimer();
+    preventClickingAfterGameEnds();
+    RESTART_BUTTON.innerText = '🏆';
+}
+
+function preventClickingAfterGameEnds() {
+    MINEFIELD_TABLE.removeEventListener("click", leftClick);
+    MINEFIELD_TABLE.removeEventListener("contextmenu", rightClick);
+    MINEFIELD_TABLE.addEventListener("contextmenu", (event) => event.preventDefault());
+    MINEFIELD_TABLE.removeEventListener("mousedown", switchEmojiToScared);
+    APP_BODY.removeEventListener("mouseup", switchEmojiToCool);
+}
+
+function restartGame() {
+    stopTimer();
+    resetTimer();
+
+    isGameOn = false;
+    MINEFIELD_TABLE.innerHTML = "";
+    remainingMines = selectedDifficulty.mines;
+    REMAINING_MINES_COUNTER.innerText = String(remainingMines);
+    remainingCoveredCells = selectedDifficulty.columns * selectedDifficulty.rows - selectedDifficulty.mines;
+
+    wipeMines();
+    preventClickingAfterGameEnds();
+    createEventListeners();
+    initializeGame();
 }

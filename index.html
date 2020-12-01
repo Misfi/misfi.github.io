@@ -18,10 +18,11 @@
         <div class="card">
             <div class="card-header flex">
                 <select class="custom-select">
-                    <option value="beginner" selected>Beginner</option>
+                    <option value="placeholder" selected disabled hidden>Difficulty</option>
+                    <option value="beginner">Beginner</option>
                     <option value="intermediate">Intermediate</option>
                     <option value="expert">Expert</option>
-                    <option value="custom">Custom</option>
+                    <option value="custom" id="customGameOption">Custom</option>
                 </select>
                 <div class="emoji" id="emojiRestart">😎</div>
                 <div class="flex border rounded gameStats">
@@ -35,6 +36,46 @@
             </div>
         </div>
     </div>
+
+    <!-- CUSTOM GAME MODAL -->
+    <div class="modal fade" id="customDifficultyModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><b>CUSTOMIZE YOUR GAME</b></h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="customGame">
+                        <div class="form-group row justify-content-between">
+                            <label class="col-sm-2 col-form-label">Mines</label>
+                            <div class="col-sm-6">
+                                <input type="number" id="customGameInputMines" class="form-control" min="1" placeholder="1 or more" required>
+                            </div>
+                        </div>
+                        <div class="form-group row justify-content-between">
+                            <label class="col-sm-2 col-form-label">Rows</label>
+                            <div class="col-sm-6">
+                                <input type="number" id="customGameInputRows" class="form-control" min="3" placeholder="3 or more" required>
+                            </div>
+                        </div>
+                        <div class="form-group row justify-content-between mb-0">
+                            <label class="col-sm-2 col-form-label">Columns</label>
+                            <div class="col-sm-6">
+                                <input type="number" id="customGameInputColumns" class="form-control" min="8" placeholder="8 or more" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" form="customGame" id="customGameStartButton" class="btn btn-primary btn-block">Start custom game</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </main>
 
 <footer class="text-center">
