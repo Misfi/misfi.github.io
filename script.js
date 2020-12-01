@@ -1,5 +1,4 @@
 //TODO:
-//boom emojis
 //fix events on firefox
 //rewrite: css to scss
 //rewrite: js to jQuery
@@ -9,6 +8,7 @@
 //sharing links
 //update html/css
 //refactor whole minefield prep
+//add smooth explosions transition + shaking
 
 const DIFFICULTY = {
     beginner: {mines: 10, rows: 8, columns: 8},
@@ -39,6 +39,7 @@ let remainingCoveredCells = selectedDifficulty.columns * selectedDifficulty.rows
 let isGameOn = false;
 let timer = 0;
 let timerIntervalID;
+let mineLocation = [];
 
 initializeGame();
 
@@ -84,6 +85,10 @@ function populateMinefield() {
             cell.isMine = true;
             incrementAdjacentCells(row, column);
             minesLeftToDistribute--;
+            mineLocation.push({
+                row: row,
+                column: column
+            });
         }
     }
 }
@@ -133,6 +138,7 @@ function wipeMines() {
     for (let i = 0; i < selectedDifficulty.rows; i++) {
         MINEFIELD.pop();
     }
+    mineLocation = [];
 }
 
 function switchDifficulty() {
@@ -223,6 +229,7 @@ function leftClick(event) {
     if (!cell.isUncovered && !cell.isFlagged) {
         if (cell.isMine) {
             gameOver();
+            return;
         } else {
             if (cell.value > 0 && remainingCoveredCells === 1) {
                 winGame();
@@ -284,10 +291,29 @@ function uncoverAdjacentCells(row, column) {
 }
 
 function gameOver() {
+    RESTART_BUTTON.innerText = '☠️';
     stopTimer();
     preventClickingAfterGameEnds();
-    RESTART_BUTTON.innerText = '☠️';
+    uncoverAllMineCells();
+    explodeAllMines();
 }
+
+function uncoverAllMineCells() {
+    mineLocation.forEach(function(location) {
+        uncoverSingleCell(location.row, location.column);
+    });
+}
+
+function explodeAllMines() {
+    for (let i = 0; i < mineLocation.length; i++) {
+        setTimeout(function() {
+            document.getElementById(`cell-${mineLocation[i].row}-${mineLocation[i].column}`).innerText = '💥';
+        }, 50 * i);
+    }
+}
+
+
+
 
 function winGame() {
     stopTimer();
