@@ -52,6 +52,7 @@ footer {
     padding: 0;
 }
 
+.mineTable,
 td.uncovered {
     background: #e3e3e3;
 }
@@ -136,4 +137,18 @@ a:hover {
 
 .modal-header .close span {
     font-size: 30px !important;
+}
+
+.explode {
+    animation: explodeMineSize 1000ms;
+}
+
+@keyframes explodeMineSize {
+    0% {transform: scale(0.5);}
+    50% {transform: scale(2);}
+    100% {transform: scale(1);}
+}
+
+td span {
+    display: inline-block;
 }

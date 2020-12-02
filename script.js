@@ -114,15 +114,18 @@ function incrementAdjacentCells(row, column) {
 
 function renderMinefield() {
     for (let i = 0; i < selectedDifficulty.rows; i++) {
-        let newElement = document.createElement("TR");
+        let newElementTR = document.createElement("TR");
 
-        newElement.classList.add(`row-${i}`);
-        MINEFIELD_TABLE.appendChild(newElement);
+        newElementTR.classList.add(`row-${i}`);
+        MINEFIELD_TABLE.appendChild(newElementTR);
 
         for (let j = 0; j < selectedDifficulty.columns; j++) {
-            newElement = document.createElement("TD");
-            newElement.id = `cell-${i}-${j}`;
-            document.querySelector(`.row-${i}`).appendChild(newElement);
+            let newElementTD = document.createElement("TD");
+            let newElementSPAN = document.createElement("SPAN");
+            newElementTD.id = `cell-${i}-${j}`;
+            newElementSPAN.id = `span-${i}-${j}`;
+            newElementTD.appendChild(newElementSPAN);
+            document.querySelector(`.row-${i}`).appendChild(newElementTD);
         }
     }
 }
@@ -257,7 +260,7 @@ function rightClick(event) {
     const cell = MINEFIELD[row][column];
 
     if (!cell.isUncovered) {
-        const element = document.getElementById(`cell-${row}-${column}`);
+        const element = document.getElementById(`span-${row}-${column}`);
 
         event.preventDefault();
 
@@ -276,8 +279,9 @@ function rightClick(event) {
 function uncoverSingleCell(row, column) {
     const uncoveredNode = document.createTextNode(MINEFIELD[row][column].displayText);
     const cell = document.getElementById(`cell-${row}-${column}`);
+    const span = document.getElementById(`span-${row}-${column}`);
 
-    cell.appendChild(uncoveredNode);
+    span.appendChild(uncoveredNode);
     cell.classList.add("uncovered");
     cell.classList.add(`cell-${MINEFIELD[row][column].value}`);
 
@@ -319,11 +323,13 @@ function explodeAllMines() {
     explodeIntervalID = setInterval(function() {
         if (mineLocation.length) {
             let location = mineLocation.pop();
-            document.getElementById(`cell-${location.row}-${location.column}`).innerText = '💥';
+            document.getElementById(`span-${location.row}-${location.column}`).innerText = '💥';
+            const span = document.getElementById(`span-${location.row}-${location.column}`);
+            span.classList.add("explode");
         } else {
             clearInterval(explodeIntervalID);
         }
-    }, 30);
+    }, 50);
 }
 
 function winGame() {
