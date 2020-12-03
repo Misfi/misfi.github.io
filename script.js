@@ -1,22 +1,18 @@
 //_ADD:
 // Debug mode
 // Tests
-// Explosion animation
-// -- smooth transform
-// -- shaking
-
+// Some win animations (confetti? border color flashing?)
 
 //_FIXES:
 // Firefox - events not working
-
+// Mobile view
+// Game over uncovering flagged fields
 
 //_REFACTORING:
-// scss
 // jquery
 // fix html
 // minefield prep
 // loops
-
 
 const DIFFICULTY = {
     beginner: {mines: 10, rows: 8, columns: 8},
@@ -33,7 +29,7 @@ class Cell {
     displayText = "";
 }
 
-const MINEFIELD_TABLE = document.querySelector(".mineTable");
+const MINEFIELD_TABLE = document.querySelector(".minefield");
 const DIFFICULTY_SELECTOR = document.querySelector("select");
 const RESTART_BUTTON = document.getElementById("emojiRestart");
 const TIME_COUNTER = document.getElementById("timeCounter");
@@ -283,7 +279,7 @@ function uncoverSingleCell(row, column) {
 
     span.appendChild(uncoveredNode);
     cell.classList.add("uncovered");
-    cell.classList.add(`cell-${MINEFIELD[row][column].value}`);
+    cell.classList.add(`value-${MINEFIELD[row][column].value}`);
 
     MINEFIELD[row][column].isUncovered = true;
     --remainingCoveredCells;
