@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Jura:wght@500&display=swap');
 
 $body-background: #483d8b;
-$stats-background: #ffffff;
+$statistics-background: #ffffff;
 $primary: #c2c3c8;
 $cell-uncovered: #e3e3e3;
 $cell-hover: #e3e3e3;
@@ -112,14 +112,14 @@ input {
   font-size: 30px;
 }
 
-.emoji {
+.restart {
   cursor: pointer;
   font-size: 25px;
   margin: auto;
 }
 
 .statistics {
-  background: $stats-background;
+  background: $statistics-background;
   width: $nav-elem-width;
 
   > div {

@@ -12,7 +12,6 @@
 // jquery
 // fix html
 // minefield prep
-// loops
 
 const DIFFICULTY = {
     beginner: {mines: 10, rows: 8, columns: 8},
@@ -29,12 +28,12 @@ class Cell {
     displayText = "";
 }
 
+const APP_BODY = document.querySelector("body");
 const MINEFIELD_TABLE = document.querySelector(".minefield");
 const DIFFICULTY_SELECTOR = document.querySelector("select");
-const RESTART_BUTTON = document.getElementById("emojiRestart");
+const RESTART_BUTTON = document.querySelector(".restart");
 const TIME_COUNTER = document.getElementById("timeCounter");
 const REMAINING_MINES_COUNTER = document.getElementById("remainingMinesCounter");
-const APP_BODY = document.querySelector("body");
 const MINEFIELD = [];
 
 let selectedDifficulty = DIFFICULTY.beginner;
@@ -150,7 +149,6 @@ function wipeMines() {
 }
 
 function switchDifficulty() {
-
     if (DIFFICULTY_SELECTOR.value === "custom") {
         $('#customDifficultyModal').modal('show');
         DIFFICULTY_SELECTOR.selectedIndex = 0;
@@ -159,7 +157,6 @@ function switchDifficulty() {
         restartGame();
         DIFFICULTY_SELECTOR.selectedIndex = 0;
     }
-
 }
 
 function startGame() {
