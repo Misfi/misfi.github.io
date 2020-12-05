@@ -1,9 +1,8 @@
 //_ADD:
-// Debug mode
-// Tests
 // Some win animations (confetti? border color flashing?)
+// Moar refactoring
+// Tests
 // Mobile view
-// Shake flags
 
 const DIFFICULTY = {
     beginner: {mines: 10, rows: 8, columns: 8},
