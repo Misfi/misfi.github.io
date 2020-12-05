@@ -71,14 +71,14 @@ footer {
 tr {
   display: block; }
   tr:not(:last-child) td {
-    border-bottom: 2px; }
+    border-bottom: 1px; }
 
 .uncovered {
   background: #e3e3e3; }
 
 td {
   background: #c2c3c8;
-  border: 3px solid #e3e3e3;
+  border: 2px solid #e3e3e3;
   font-size: 1.2rem;
   font-weight: bold;
   height: 40px;

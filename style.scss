@@ -91,7 +91,7 @@ tr {
 
   &:not(:last-child) {
     td {
-      border-bottom: 2px;
+      border-bottom: 1px;
     }
   }
 }
@@ -102,7 +102,7 @@ tr {
 
 td {
   background: $primary;
-  border: 3px solid $cell-uncovered;
+  border: 2px solid $cell-uncovered;
   font-size: 1.2rem;
   font-weight: bold;
   height: $cell-size;
