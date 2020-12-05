@@ -1,4 +1,6 @@
 // scss-lint:disable ColorVariable, HexLength, LeadingZero
+// scss-lint:disable PropertySortOrder
+// Todo: remove sortOrder disable
 
 @import url('https://fonts.googleapis.com/css2?family=Jura:wght@500&display=swap');
 
@@ -11,8 +13,8 @@ $heading: #ffffff;
 $input-valid: #28a745;
 $input-invalid: #dc3545;
 
-$cell-size: 50px;
-$nav-elem-width: 150px;
+$cell-size: 40px;
+$nav-elem-width: 120px;
 $font-family: 'Jura', sans-serif;
 
 
@@ -32,8 +34,15 @@ $font-family: 'Jura', sans-serif;
   padding: 0;
 }
 
+html {
+  height: 100%;
+}
+
 body {
+  height: 100%;
   background: $body-background;
+  display: flex;
+  justify-content: space-between;
 }
 
 h1,
@@ -41,12 +50,13 @@ h4 {
   color: $heading;
 }
 
-nav {
-  height: 80px;
+main {
+  margin: 50px 0;
 }
 
-main {
-  height: calc(100vh - 160px);
+footer {
+  text-align: center;
+  background: #292281;
 }
 
 .card {
@@ -61,9 +71,31 @@ main {
 
 .card-body {
   padding: 0;
+  display: block;
 }
 
-.minefield,
+.minefield {
+  background: $cell-uncovered;
+  overflow: auto;
+  display: block;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+tr {
+  display: block;
+
+  &:not(:last-child) {
+    td {
+      border-bottom: 2px;
+    }
+  }
+}
+
 .uncovered {
   background: $cell-uncovered;
 }
@@ -76,6 +108,8 @@ td {
   height: $cell-size;
   text-align: center;
   width: $cell-size;
+  min-width: $cell-size;
+  min-height: $cell-size;
 
   span {
     display: inline-block;
@@ -108,8 +142,10 @@ input {
   }
 }
 
-.close span {
-  font-size: 30px;
+.close {
+  span {
+    font-size: 30px;
+  }
 }
 
 .restart {
@@ -128,8 +164,10 @@ input {
   }
 }
 
-a:hover {
-  text-decoration: none;
+a {
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .explode {
@@ -140,10 +178,4 @@ a:hover {
   0% { transform: scale(0.5); }
   50% { transform: scale(2); }
   100% { transform: scale(1); }
-}
-
-footer {
-  bottom: 0;
-  height: 80px;
-  position: sticky;
 }

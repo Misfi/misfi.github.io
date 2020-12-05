@@ -29,18 +29,25 @@
   margin: 0;
   padding: 0; }
 
+html {
+  height: 100%; }
+
 body {
-  background: #483d8b; }
+  height: 100%;
+  background: #483d8b;
+  display: flex;
+  justify-content: space-between; }
 
 h1,
 h4 {
   color: #ffffff; }
 
-nav {
-  height: 80px; }
-
 main {
-  height: calc(100vh - 160px); }
+  margin: 50px 0; }
+
+footer {
+  text-align: center;
+  background: #292281; }
 
 .card {
   background: #c2c3c8;
@@ -51,9 +58,23 @@ main {
   padding: 12px; }
 
 .card-body {
-  padding: 0; }
+  padding: 0;
+  display: block; }
 
-.minefield,
+.minefield {
+  background: #e3e3e3;
+  overflow: auto;
+  display: block;
+  -ms-overflow-style: none;
+  scrollbar-width: none; }
+  .minefield::-webkit-scrollbar {
+    display: none; }
+
+tr {
+  display: block; }
+  tr:not(:last-child) td {
+    border-bottom: 2px; }
+
 .uncovered {
   background: #e3e3e3; }
 
@@ -62,9 +83,11 @@ td {
   border: 3px solid #e3e3e3;
   font-size: 1.2rem;
   font-weight: bold;
-  height: 50px;
+  height: 40px;
   text-align: center;
-  width: 50px; }
+  width: 40px;
+  min-width: 40px;
+  min-height: 40px; }
   td span {
     display: inline-block; }
   td:hover {
@@ -78,7 +101,7 @@ td {
   justify-items: center; }
 
 .custom-select {
-  width: 150px; }
+  width: 120px; }
 
 input:valid {
   border-left: 5px solid #28a745; }
@@ -95,7 +118,7 @@ input:invalid {
 
 .statistics {
   background: #ffffff;
-  width: 150px; }
+  width: 120px; }
   .statistics > div {
     height: max-content;
     margin: auto; }
@@ -113,9 +136,5 @@ a:hover {
     transform: scale(2); }
   100% {
     transform: scale(1); } }
-footer {
-  bottom: 0;
-  height: 80px;
-  position: sticky; }
 
 /*# sourceMappingURL=style.css.map */
