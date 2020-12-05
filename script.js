@@ -2,10 +2,8 @@
 // Debug mode
 // Tests
 // Some win animations (confetti? border color flashing?)
-
 // Firefox - events not working
 // Mobile view
-// jquery
 
 const DIFFICULTY = {
     beginner: {mines: 10, rows: 8, columns: 8},
