@@ -2,6 +2,8 @@
 // Debug mode
 // Tests
 // Some win animations (confetti? border color flashing?)
+// explode emoji slow fadeout
+// style main scrollbar
 
 //_FIXES:
 // Firefox - events not working
@@ -10,8 +12,6 @@
 
 //_REFACTORING:
 // jquery
-// fix html
-// minefield prep
 
 const DIFFICULTY = {
     beginner: {mines: 10, rows: 8, columns: 8},
