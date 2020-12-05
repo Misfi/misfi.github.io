@@ -2,8 +2,8 @@
 // Debug mode
 // Tests
 // Some win animations (confetti? border color flashing?)
-// Firefox - events not working
 // Mobile view
+// Shake flags
 
 const DIFFICULTY = {
     beginner: {mines: 10, rows: 8, columns: 8},
@@ -218,7 +218,7 @@ function leftClick(event) {
         return;
     }
 
-    const coordinates = event.toElement.id.split("-");
+    const coordinates = event.target.id.split("-");
     const row = Number(coordinates[1]);
     const column = Number(coordinates[2]);
     const cell = MINEFIELD[row][column];
@@ -239,7 +239,7 @@ function leftClick(event) {
 }
 
 function rightClick(event) {
-    const coordinates = event.toElement.id.split("-");
+    const coordinates = event.target.id.split("-");
     const row = coordinates[1];
     const column = coordinates[2];
     const cell = MINEFIELD[row][column];
