@@ -8,7 +8,7 @@ $body-background: #483d8b;
 $statistics-background: #ffffff;
 $primary: #c2c3c8;
 $cell-uncovered: #e3e3e3;
-$cell-hover: #e3e3e3;
+$cell-hover: #acb5b8;
 $heading: #ffffff;
 $input-valid: #28a745;
 $input-invalid: #dc3545;
@@ -62,16 +62,16 @@ footer {
 .card {
   background: $primary;
   padding: 3px;
-}
 
-.card-header {
-  background: $primary;
-  padding: 12px;
-}
+  .card-header {
+    background: $primary;
+    padding: 12px;
+  }
 
-.card-body {
-  padding: 0;
-  display: block;
+  .card-body {
+    padding: 0;
+    display: block;
+  }
 }
 
 .minefield {
@@ -115,9 +115,14 @@ td {
     display: inline-block;
   }
 
-  &:hover {
+  &:not(.uncovered):hover {
     background: $cell-hover;
     cursor: pointer;
+  }
+
+  &:hover {
+    background: initial;
+    cursor: initial;
   }
 }
 

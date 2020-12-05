@@ -52,14 +52,12 @@ footer {
 .card {
   background: #c2c3c8;
   padding: 3px; }
-
-.card-header {
-  background: #c2c3c8;
-  padding: 12px; }
-
-.card-body {
-  padding: 0;
-  display: block; }
+  .card .card-header {
+    background: #c2c3c8;
+    padding: 12px; }
+  .card .card-body {
+    padding: 0;
+    display: block; }
 
 .minefield {
   background: #e3e3e3;
@@ -90,9 +88,12 @@ td {
   min-height: 40px; }
   td span {
     display: inline-block; }
-  td:hover {
-    background: #e3e3e3;
+  td:not(.uncovered):hover {
+    background: #acb5b8;
     cursor: pointer; }
+  td:hover {
+    background: initial;
+    cursor: initial; }
 
 .flex {
   align-content: center;
