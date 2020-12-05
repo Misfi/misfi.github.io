@@ -2,14 +2,9 @@
 // Debug mode
 // Tests
 // Some win animations (confetti? border color flashing?)
-// style main scrollbar
 
-//_FIXES:
 // Firefox - events not working
 // Mobile view
-// Game over uncovering flagged fields
-
-//_REFACTORING:
 // jquery
 
 const DIFFICULTY = {
