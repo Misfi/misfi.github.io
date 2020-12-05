@@ -2,7 +2,6 @@
 // Debug mode
 // Tests
 // Some win animations (confetti? border color flashing?)
-// explode emoji slow fadeout
 // style main scrollbar
 
 //_FIXES:
@@ -300,11 +299,11 @@ function gameOver() {
     RESTART_BUTTON.innerText = '☠️';
     stopTimer();
     preventClickingAfterGameEnds();
-    uncoverAllMineCells();
-    explodeAllMines();
+    uncoverAllNotFlaggedMineCells();
+    explodeAllNotFlaggedMines();
 }
 
-function uncoverAllMineCells() {
+function uncoverAllNotFlaggedMineCells() {
     mineLocation.forEach(function(location) {
         if (!MINEFIELD[location.row][location.column].isFlagged) {
             uncoverSingleCell(location.row, location.column);
@@ -312,13 +311,16 @@ function uncoverAllMineCells() {
     });
 }
 
-function explodeAllMines() {
+function explodeAllNotFlaggedMines() {
     explodeIntervalID = setInterval(function() {
         if (mineLocation.length) {
             let location = mineLocation.pop();
-            document.getElementById(`span-${location.row}-${location.column}`).innerText = '💥';
-            const span = document.getElementById(`span-${location.row}-${location.column}`);
-            span.classList.add("explode");
+
+            if (!MINEFIELD[location.row][location.column].isFlagged) {
+                document.getElementById(`span-${location.row}-${location.column}`).innerText = '💥';
+                const span = document.getElementById(`span-${location.row}-${location.column}`);
+                span.classList.add("explode");
+            }
         } else {
             clearInterval(explodeIntervalID);
         }
