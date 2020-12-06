@@ -5,7 +5,7 @@
 // Mobile view
 
 const DIFFICULTY = {
-    beginner: {mines: 10, rows: 8, columns: 8},
+    beginner: {mines: 10, rows: 9, columns: 9},
     intermediate: {mines: 40, rows: 16, columns: 16},
     expert: {mines: 99, rows: 16, columns: 30},
     custom: {minimumMines: 1, minimumRows: 3, minimumColumns: 8}
