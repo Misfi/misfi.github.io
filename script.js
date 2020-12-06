@@ -3,6 +3,7 @@
 // Moar refactoring
 // Tests
 // Mobile view
+//wyczyscic html z klas bootstrapa
 
 const DIFFICULTY = {
     beginner: {mines: 10, rows: 9, columns: 9},
