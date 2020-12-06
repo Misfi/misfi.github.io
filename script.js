@@ -213,7 +213,7 @@ function switchEmojiToScared(event) {
 }
 
 function leftClick(event) {
-    if (event.target.tagName !== "TD") {
+    if (!event.target.matches("TD")) {
         return;
     }
 
