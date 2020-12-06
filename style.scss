@@ -40,7 +40,6 @@ html {
 
 body {
   height: 100%;
-  padding-top: 50px;
   background: $body-background;
 }
 
@@ -55,6 +54,7 @@ main {
 
 .card {
   background: $primary;
+  margin: 30px 10px;
   padding: 3px;
 
   .card-header {
