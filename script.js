@@ -3,7 +3,12 @@
 // Moar refactoring
 // Tests
 // Mobile view
-//wyczyscic html z klas bootstrapa
+// classes
+// Await chained functions
+// new Array(...).fill([])
+// populateMinefield add iteration limit variable
+// switch minefield from const to let and rework wipeMines
+// Author + git link + license
 
 const DIFFICULTY = {
     beginner: {mines: 10, rows: 9, columns: 9},
@@ -149,6 +154,7 @@ function switchDifficulty() {
         restartGame();
         DIFFICULTY_SELECTOR.selectedIndex = 0;
     }
+    //move it down together?
 }
 
 function startGame() {
@@ -168,6 +174,7 @@ function startCustomGame(event) {
     ) {
         return;
     }
+    // remove curly from return;
 
     $('#customDifficultyModal').modal('hide');
     event.preventDefault();
@@ -249,6 +256,7 @@ function rightClick(event) {
 
         event.preventDefault();
 
+        // Switch element to cell
         if (element.innerText === '🚩') {
             element.innerText = ' ';
             cell.isFlagged = false;
