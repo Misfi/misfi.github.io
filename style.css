@@ -43,9 +43,12 @@ h4 {
 main {
   margin: auto; }
 
+div.container-fluid {
+  padding-top: 20px;
+  padding-bottom: 20px; }
+
 .card {
   background: #c2c3c8;
-  margin: 30px 5px;
   padding: 3px; }
   .card .card-header {
     background: #c2c3c8;

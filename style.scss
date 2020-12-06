@@ -52,9 +52,13 @@ main {
   margin: auto;
 }
 
+div.container-fluid {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 .card {
   background: $primary;
-  margin: 30px 5px;
   padding: 3px;
 
   .card-header {
@@ -151,10 +155,8 @@ input {
   }
 }
 
-.close {
-  span {
-    font-size: 30px;
-  }
+.close span {
+  font-size: 30px;
 }
 
 .restart {
@@ -173,10 +175,8 @@ input {
   }
 }
 
-a {
-  &:hover {
-    text-decoration: none;
-  }
+a:hover {
+  text-decoration: none;
 }
 
 .explode {
