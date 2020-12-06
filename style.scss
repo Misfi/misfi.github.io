@@ -40,6 +40,7 @@ html {
 
 body {
   height: 100%;
+  display: flex;
   background: $body-background;
 }
 
@@ -50,10 +51,23 @@ h4 {
 
 main {
   margin: auto;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
 }
 
-.app-container {
-  margin: 20px;
+.custom-flex {
+  align-content: center;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  justify-items: center;
+}
+
+div.container-fluid {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .card {
@@ -121,13 +135,6 @@ td {
     background: initial;
     cursor: initial;
   }
-}
-
-.flex {
-  align-content: center;
-  display: flex;
-  justify-content: space-between;
-  justify-items: center;
 }
 
 .custom-select {

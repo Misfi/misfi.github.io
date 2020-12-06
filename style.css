@@ -34,6 +34,7 @@ html {
 
 body {
   height: 100%;
+  display: flex;
   background: #483d8b; }
 
 h1,
@@ -41,10 +42,22 @@ h4 {
   color: #ffffff; }
 
 main {
-  margin: auto; }
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center; }
 
-.app-container {
-  margin: 20px; }
+.custom-flex {
+  align-content: center;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  justify-items: center; }
+
+div.container-fluid {
+  padding-top: 20px;
+  padding-bottom: 20px; }
 
 .card {
   background: #c2c3c8;
@@ -91,12 +104,6 @@ td {
   td:hover {
     background: initial;
     cursor: initial; }
-
-.flex {
-  align-content: center;
-  display: flex;
-  justify-content: space-between;
-  justify-items: center; }
 
 .custom-select {
   width: 120px; }
