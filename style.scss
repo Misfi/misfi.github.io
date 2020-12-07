@@ -89,10 +89,12 @@ body {
 
 main {
   margin: auto;
+  width: 405px;
   display: flex;
   justify-content: center;
   align-content: center;
   align-items: center;
+  overflow-x: hidden;
 }
 
 .custom-flex {
@@ -104,7 +106,7 @@ main {
 }
 
 .card {
-  margin: 20px;
+  margin: 7px;
   display: flex;
   background: $primary;
   padding: 3px;
