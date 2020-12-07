@@ -37,16 +37,16 @@ html {
   height: 100%; }
 
 body {
-  height: 100%;
+  background: #483d8b;
   display: flex;
-  background: #483d8b; }
+  height: 100%; }
 
 main {
-  margin: auto;
-  display: flex;
-  justify-content: center;
   align-content: center;
   align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: auto;
   overflow-x: hidden; }
 
 /*
@@ -67,21 +67,21 @@ tr {
   justify-items: center; }
 
 .card {
-  margin: 7px;
-  display: flex;
   background: #c2c3c8;
+  display: flex;
+  margin: 7px;
   padding: 3px; }
   .card .card-header {
     background: #c2c3c8;
     padding: 12px; }
   .card .card-body {
-    padding: 0;
-    display: block; }
+    display: block;
+    padding: 0; }
 
 .minefield {
   background: #e3e3e3;
-  overflow: auto;
   display: block;
+  overflow: auto;
   -ms-overflow-style: none;
   scrollbar-width: none; }
   .minefield::-webkit-scrollbar {
@@ -96,10 +96,10 @@ td {
   font-size: 1.2rem;
   font-weight: bold;
   height: 40px;
-  text-align: center;
-  width: 40px;
+  min-height: 40px;
   min-width: 40px;
-  min-height: 40px; }
+  text-align: center;
+  width: 40px; }
   td span {
     display: inline-block; }
   td:not(.uncovered):hover {

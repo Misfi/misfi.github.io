@@ -1,6 +1,4 @@
 // scss-lint:disable ColorVariable, HexLength, LeadingZero
-// scss-lint:disable PropertySortOrder
-// Todo: remove sortOrder disable
 
 @import url('https://fonts.googleapis.com/css2?family=Jura:wght@500&display=swap');
 
@@ -43,17 +41,17 @@ html {
 }
 
 body {
-  height: 100%;
-  display: flex;
   background: $body-background;
+  display: flex;
+  height: 100%;
 }
 
 main {
-  margin: auto;
-  display: flex;
-  justify-content: center;
   align-content: center;
   align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: auto;
   overflow-x: hidden;
 }
 
@@ -77,9 +75,9 @@ tr {
 }
 
 .card {
-  margin: 7px;
-  display: flex;
   background: $primary;
+  display: flex;
+  margin: 7px;
   padding: 3px;
 
   .card-header {
@@ -88,15 +86,15 @@ tr {
   }
 
   .card-body {
-    padding: 0;
     display: block;
+    padding: 0;
   }
 }
 
 .minefield {
   background: $cell-uncovered;
-  overflow: auto;
   display: block;
+  overflow: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
 
@@ -115,10 +113,10 @@ td {
   font-size: 1.2rem;
   font-weight: bold;
   height: $cell-size;
+  min-height: $cell-size;
+  min-width: $cell-size;
   text-align: center;
   width: $cell-size;
-  min-width: $cell-size;
-  min-height: $cell-size;
 
   span {
     display: inline-block;
