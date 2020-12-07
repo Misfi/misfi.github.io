@@ -1,14 +1,8 @@
-//_ADD:
-// Some win animations (confetti? border color flashing?)
-// Moar refactoring
-// Tests
-// Mobile view
-// classes
-// Await chained functions
-// new Array(...).fill([])
-// populateMinefield add iteration limit variable
-// switch minefield from const to let and rework wipeMines
-// Author + git link + license
+/**
+ *
+ * Author: Filip Misiło
+ *
+*/
 
 const DIFFICULTY = {
     beginner: {mines: 10, rows: 9, columns: 9},
@@ -29,8 +23,8 @@ const APP_BODY = document.querySelector("body");
 const MINEFIELD_TABLE = document.querySelector(".minefield");
 const DIFFICULTY_SELECTOR = document.querySelector("select");
 const RESTART_BUTTON = document.querySelector(".restart");
-const TIME_COUNTER = document.getElementById("timeCounter");
-const REMAINING_MINES_COUNTER = document.getElementById("remainingMinesCounter");
+const TIME_COUNTER = document.getElementById("time-counter");
+const REMAINING_MINES_COUNTER = document.getElementById("remaining-mines-counter");
 const MINEFIELD = [];
 
 let selectedDifficulty = DIFFICULTY.beginner;
@@ -61,7 +55,7 @@ function createEventListeners() {
     MINEFIELD_TABLE.addEventListener("contextmenu", rightClick);
     MINEFIELD_TABLE.addEventListener("mousedown", switchEmojiToScared);
     APP_BODY.addEventListener("mouseup", switchEmojiToCool);
-    document.getElementById("customGameStartButton").addEventListener("click", startCustomGame);
+    document.getElementById("custom-start").addEventListener("click", startCustomGame);
 }
 
 function createMinefield() {
@@ -147,14 +141,12 @@ function wipeMines() {
 
 function switchDifficulty() {
     if (DIFFICULTY_SELECTOR.value === "custom") {
-        $('#customDifficultyModal').modal('show');
-        DIFFICULTY_SELECTOR.selectedIndex = 0;
+        $('#custom-settings-modal').modal('show');
     } else {
         selectedDifficulty = DIFFICULTY[DIFFICULTY_SELECTOR.value];
         restartGame();
-        DIFFICULTY_SELECTOR.selectedIndex = 0;
     }
-    //move it down together?
+    DIFFICULTY_SELECTOR.selectedIndex = 0;
 }
 
 function startGame() {
@@ -163,9 +155,9 @@ function startGame() {
 }
 
 function startCustomGame(event) {
-    selectedDifficulty.mines = document.getElementById("customGameInputMines").value;
-    selectedDifficulty.rows = document.getElementById("customGameInputRows").value;
-    selectedDifficulty.columns = document.getElementById("customGameInputColumns").value;
+    selectedDifficulty.mines = document.getElementById("custom-input-mines").value;
+    selectedDifficulty.rows = document.getElementById("custom-input-rows").value;
+    selectedDifficulty.columns = document.getElementById("custom-input-columns").value;
 
     if (
         selectedDifficulty.mines < DIFFICULTY.custom.minimumMines
@@ -174,9 +166,8 @@ function startCustomGame(event) {
     ) {
         return;
     }
-    // remove curly from return;
 
-    $('#customDifficultyModal').modal('hide');
+    $('#custom-settings-modal').modal('hide');
     event.preventDefault();
     restartGame();
 }
@@ -251,12 +242,11 @@ function rightClick(event) {
     const column = coordinates[2];
     const cell = MINEFIELD[row][column];
 
+    event.preventDefault();
+
     if (!cell.isUncovered) {
         const element = document.getElementById(`span-${row}-${column}`);
 
-        event.preventDefault();
-
-        // Switch element to cell
         if (element.innerText === '🚩') {
             element.innerText = ' ';
             cell.isFlagged = false;
