@@ -89,13 +89,23 @@ body {
 
 main {
   margin: auto;
-  width: 405px;
   display: flex;
   justify-content: center;
   align-content: center;
   align-items: center;
   overflow-x: hidden;
 }
+
+/*
+tr {
+
+  &:not(:last-child) {
+    td {
+      border-bottom: 1px;
+    }
+  }
+}
+*/
 
 .custom-flex {
   align-content: center;
@@ -133,17 +143,6 @@ main {
     display: none;
   }
 }
-
-/*
-tr {
-
-  &:not(:last-child) {
-    td {
-      border-bottom: 1px;
-    }
-  }
-}
-*/
 
 .uncovered {
   background: $cell-uncovered;
