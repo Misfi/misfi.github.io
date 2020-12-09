@@ -25,7 +25,6 @@ const DIFFICULTY_SELECTOR = document.querySelector("select");
 const RESTART_BUTTON = document.querySelector(".restart");
 const TIME_COUNTER = document.getElementById("time-counter");
 const REMAINING_MINES_COUNTER = document.getElementById("remaining-mines-counter");
-const MINEFIELD = [];
 
 let selectedDifficulty = DIFFICULTY.beginner;
 let remainingMines = selectedDifficulty.mines;
@@ -35,6 +34,7 @@ let timer = 0;
 let explodeIntervalID;
 let timerIntervalID;
 let mineLocation = [];
+let minefield;
 
 initializeGame();
 
@@ -60,9 +60,9 @@ function createEventListeners() {
 
 function createMinefield() {
     for (let i = 0; i < selectedDifficulty.rows; i++) {
-        MINEFIELD.push([]);
+        minefield.push([]);
         for (let j = 0; j < selectedDifficulty.columns; j++) {
-            MINEFIELD[i][j] = new Cell();
+            minefield[i][j] = new Cell();
         }
     }
 }
@@ -73,7 +73,7 @@ function populateMinefield() {
     while (minesLeftToDistribute) {
         const row = getRandomValue(selectedDifficulty.rows);
         const column = getRandomValue(selectedDifficulty.columns);
-        const cell = MINEFIELD[row][column];
+        const cell = minefield[row][column];
 
         if (!cell.isMine) {
             cell.value = '-1';
@@ -91,8 +91,8 @@ function populateMinefield() {
 function incrementAdjacentCells(row, column) {
     for (let i = row - 1; i <= row + 1; i++) {
         for (let j = column - 1; j <= column + 1 ; j++) {
-            if (isWithinBounds(i, j) && !MINEFIELD[i][j].isMine) {
-                MINEFIELD[i][j].value++;
+            if (isWithinBounds(i, j) && !minefield[i][j].isMine) {
+                minefield[i][j].value++;
             }
         }
     }
@@ -119,7 +119,7 @@ function renderMinefield() {
 function updateCellDisplayText() {
     for (let i = 0; i < selectedDifficulty.rows; i++) {
         for (let j = 0; j < selectedDifficulty.columns; j++) {
-            let cell = MINEFIELD[i][j];
+            let cell = minefield[i][j];
 
             if (cell.value === 0) {
                 cell.displayText = ' ';
@@ -134,7 +134,7 @@ function updateCellDisplayText() {
 
 function wipeMines() {
     for (let i = 0; i < selectedDifficulty.rows; i++) {
-        MINEFIELD.pop();
+        minefield.pop();
     }
     mineLocation = [];
 }
@@ -219,7 +219,7 @@ function leftClick(event) {
     const coordinates = event.target.id.split("-");
     const row = Number(coordinates[1]);
     const column = Number(coordinates[2]);
-    const cell = MINEFIELD[row][column];
+    const cell = minefield[row][column];
 
     if (!cell.isUncovered && !cell.isFlagged) {
         if (cell.isMine) {
@@ -240,7 +240,6 @@ function rightClick(event) {
     const coordinates = event.target.id.split("-");
     const row = coordinates[1];
     const column = coordinates[2];
-    const cell = MINEFIELD[row][column];
 
     event.preventDefault();
 
@@ -260,18 +259,17 @@ function rightClick(event) {
 }
 
 function uncoverSingleCell(row, column) {
-    const uncoveredNode = document.createTextNode(MINEFIELD[row][column].displayText);
+    const uncoveredNode = document.createTextNode(minefield[row][column].displayText);
     const cell = document.getElementById(`cell-${row}-${column}`);
     const span = document.getElementById(`span-${row}-${column}`);
 
     span.appendChild(uncoveredNode);
     cell.classList.add("uncovered");
-    cell.classList.add(`value-${MINEFIELD[row][column].value}`);
-
-    MINEFIELD[row][column].isUncovered = true;
+    cell.classList.add(`value-${minefield[row][column].value}`);
+    minefield[row][column].isUncovered = true;
     --remainingCoveredCells;
 
-    if (MINEFIELD[row][column].value === 0) {
+    if (minefield[row][column].value === 0) {
         uncoverAdjacentCells(row, column);
     }
 }
@@ -279,7 +277,7 @@ function uncoverSingleCell(row, column) {
 function uncoverAdjacentCells(row, column) {
     for (let i = row - 1; i <= row + 1; i++) {
         for (let j = column - 1; j <= column + 1; j++) {
-            if (isWithinBounds(i, j) && !MINEFIELD[i][j].isUncovered && !MINEFIELD[i][j].isFlagged) {
+            if (isWithinBounds(i, j) && !minefield[i][j].isUncovered && !minefield[i][j].isFlagged) {
                 uncoverSingleCell(i, j);
             }
         }
@@ -296,7 +294,7 @@ function gameOver() {
 
 function uncoverAllNotFlaggedMineCells() {
     mineLocation.forEach(function(location) {
-        if (!MINEFIELD[location.row][location.column].isFlagged) {
+        if (!minefield[location.row][location.column].isFlagged) {
             uncoverSingleCell(location.row, location.column);
         }
     });
@@ -307,7 +305,7 @@ function explodeAllNotFlaggedMines() {
         if (mineLocation.length) {
             let location = mineLocation.pop();
 
-            if (!MINEFIELD[location.row][location.column].isFlagged) {
+            if (!minefield[location.row][location.column].isFlagged) {
                 document.getElementById(`span-${location.row}-${location.column}`).innerText = '💥';
                 const span = document.getElementById(`span-${location.row}-${location.column}`);
                 span.classList.add("explode");
