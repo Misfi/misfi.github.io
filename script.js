@@ -4,11 +4,11 @@
  *
 */
 
-const DIFFICULTY = {
-    beginner: {mines: 10, rows: 9, columns: 9},
-    intermediate: {mines: 40, rows: 16, columns: 16},
-    expert: {mines: 99, rows: 16, columns: 30},
-    custom: {minimumMines: 1, minimumRows: 3, minimumColumns: 8}
+const difficulty = {
+    BEGINNER: {mines: 10, rows: 9, columns: 9},
+    INTERMEDIATE: {mines: 40, rows: 16, columns: 16},
+    EXPERT: {mines: 99, rows: 16, columns: 30},
+    CUSTOM: {minimumMines: 1, minimumRows: 3, minimumColumns: 8}
 }
 
 class Cell {
@@ -26,7 +26,7 @@ const RESTART_BUTTON = document.querySelector(".restart");
 const TIME_COUNTER = document.getElementById("time-counter");
 const REMAINING_MINES_COUNTER = document.getElementById("remaining-mines-counter");
 
-let selectedDifficulty = DIFFICULTY.beginner;
+let selectedDifficulty = difficulty.BEGINNER;
 let remainingMines = selectedDifficulty.mines;
 let remainingCoveredCells = selectedDifficulty.columns * selectedDifficulty.rows - selectedDifficulty.mines;
 let isGameOn = false;
@@ -34,14 +34,14 @@ let timer = 0;
 let explodeIntervalID;
 let timerIntervalID;
 let mineLocation = [];
-let minefield;
+let minefield = [];
 
 initializeGame();
 
 function initializeGame() {
     switchEmojiToCool();
     createEventListeners();
-    createMinefield();
+    createNewMinefield();
     populateMinefield();
     updateCellDisplayText();
     renderMinefield();
@@ -58,7 +58,7 @@ function createEventListeners() {
     document.getElementById("custom-start").addEventListener("click", startCustomGame);
 }
 
-function createMinefield() {
+function createNewMinefield() {
     for (let i = 0; i < selectedDifficulty.rows; i++) {
         minefield.push([]);
         for (let j = 0; j < selectedDifficulty.columns; j++) {
@@ -133,9 +133,7 @@ function updateCellDisplayText() {
 }
 
 function wipeMines() {
-    for (let i = 0; i < selectedDifficulty.rows; i++) {
-        minefield.pop();
-    }
+    minefield = [];
     mineLocation = [];
 }
 
@@ -143,7 +141,7 @@ function switchDifficulty() {
     if (DIFFICULTY_SELECTOR.value === "custom") {
         $('#custom-settings-modal').modal('show');
     } else {
-        selectedDifficulty = DIFFICULTY[DIFFICULTY_SELECTOR.value];
+        selectedDifficulty = difficulty[DIFFICULTY_SELECTOR.value.toUpperCase()];
         restartGame();
     }
     DIFFICULTY_SELECTOR.selectedIndex = 0;
@@ -160,9 +158,9 @@ function startCustomGame(event) {
     selectedDifficulty.columns = document.getElementById("custom-input-columns").value;
 
     if (
-        selectedDifficulty.mines < DIFFICULTY.custom.minimumMines
-        || selectedDifficulty.rows < DIFFICULTY.custom.minimumRows
-        || selectedDifficulty.columns < DIFFICULTY.custom.minimumColumns
+        selectedDifficulty.mines < difficulty.CUSTOM.minimumMines
+        || selectedDifficulty.rows < difficulty.CUSTOM.minimumRows
+        || selectedDifficulty.columns < difficulty.CUSTOM.minimumColumns
     ) {
         return;
     }
