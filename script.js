@@ -311,7 +311,7 @@ function explodeAllNotFlaggedMines() {
             if (!minefield[location.row][location.column].isFlagged) {
                 document.getElementById(`span-${location.row}-${location.column}`).innerText = '💥';
                 const span = document.getElementById(`span-${location.row}-${location.column}`);
-                span.classList.add("explode");
+                span.classList.add("explode-animation");
             }
         } else {
             clearInterval(explodeIntervalID);
@@ -323,6 +323,7 @@ function winGame() {
     stopTimer();
     preventClickingAfterGameEnds();
     RESTART_BUTTON.innerText = '🏆';
+    document.querySelector(".win-container").classList.add("win-animation");
 }
 
 function preventClickingAfterGameEnds() {
@@ -343,6 +344,7 @@ function restartGame() {
     remainingMines = selectedDifficulty.mines;
     REMAINING_MINES_COUNTER.innerText = String(remainingMines);
     remainingCoveredCells = selectedDifficulty.columns * selectedDifficulty.rows - selectedDifficulty.mines;
+    document.querySelector(".win-container").classList.remove("win-animation");
 
     wipeMines();
     preventClickingAfterGameEnds();
