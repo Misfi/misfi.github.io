@@ -242,11 +242,16 @@ function rightClick(event) {
     const column = coordinates[2];
 
     event.preventDefault();
+    toggleCellFlag(row, column);
+}
+
+function toggleCellFlag(row, column) {
+    const cell = minefield[row][column];
 
     if (!cell.isUncovered) {
         const element = document.getElementById(`span-${row}-${column}`);
 
-        if (element.innerText === '🚩') {
+        if (cell.isFlagged) {
             element.innerText = ' ';
             cell.isFlagged = false;
             REMAINING_MINES_COUNTER.innerText = String(Number(REMAINING_MINES_COUNTER.innerText) + 1);
