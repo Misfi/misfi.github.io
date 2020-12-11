@@ -323,7 +323,7 @@ function winGame() {
     stopTimer();
     preventClickingAfterGameEnds();
     RESTART_BUTTON.innerText = '🏆';
-    document.querySelector(".win-container").classList.add("win-animation");
+    document.querySelector(".win-container").classList.add("win-in-animation");
 }
 
 function preventClickingAfterGameEnds() {
@@ -335,6 +335,8 @@ function preventClickingAfterGameEnds() {
 }
 
 function restartGame() {
+    let winElement = document.querySelector(".win-container").classList;
+
     stopTimer();
     resetTimer();
     clearInterval(explodeIntervalID);
@@ -344,7 +346,14 @@ function restartGame() {
     remainingMines = selectedDifficulty.mines;
     REMAINING_MINES_COUNTER.innerText = String(remainingMines);
     remainingCoveredCells = selectedDifficulty.columns * selectedDifficulty.rows - selectedDifficulty.mines;
-    document.querySelector(".win-container").classList.remove("win-animation");
+
+    if (winElement.contains("win-in-animation")) {
+        document.querySelector(".win-container").classList.remove("win-in-animation");
+        document.querySelector(".win-container").classList.add("win-out-animation");
+        setTimeout(() => {
+            document.querySelector(".win-container").classList.remove("win-out-animation");
+        }, 1000);
+    }
 
     wipeMines();
     preventClickingAfterGameEnds();
