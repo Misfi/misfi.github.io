@@ -167,17 +167,24 @@ a:hover {
       display: inline-block;
       transform: scaleX(-1); }
 
-.win-animation {
-  animation: win 4000ms forwards;
+.win-in-animation {
+  animation: win 1000ms forwards;
+  display: flex; }
+
+.win-out-animation {
+  animation: win-out 1000ms forwards;
   display: flex; }
 
 @keyframes win {
   0% {
-    opacity: 0;
     transform: translateX(5000px); }
-  40%, 50%, 60% {
-    opacity: 1;
-    transform: translateX(0); }
+  80% {
+    opacity: 0.5; }
+  100% {
+    opacity: 1; } }
+@keyframes win-out {
+  0% {
+    opacity: 1; }
   100% {
     opacity: 0;
     transform: translateX(-5000px); } }
