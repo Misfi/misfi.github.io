@@ -8,7 +8,7 @@ const difficulty = {
     BEGINNER: {mines: 10, rows: 9, columns: 9},
     INTERMEDIATE: {mines: 40, rows: 16, columns: 16},
     EXPERT: {mines: 99, rows: 16, columns: 30},
-    CUSTOM: {minimumMines: 1, minimumRows: 3, minimumColumns: 8}
+    CUSTOM: {mines: 0, rows: 0, columns: 0}
 }
 
 class Cell {
@@ -153,14 +153,15 @@ function startGame() {
 }
 
 function startCustomGame(event) {
+    selectedDifficulty = difficulty.CUSTOM;
     selectedDifficulty.mines = document.getElementById("custom-input-mines").value;
     selectedDifficulty.rows = document.getElementById("custom-input-rows").value;
     selectedDifficulty.columns = document.getElementById("custom-input-columns").value;
 
     if (
-        selectedDifficulty.mines < difficulty.CUSTOM.minimumMines
-        || selectedDifficulty.rows < difficulty.CUSTOM.minimumRows
-        || selectedDifficulty.columns < difficulty.CUSTOM.minimumColumns
+        selectedDifficulty.mines < 1
+        || selectedDifficulty.rows < 3
+        || selectedDifficulty.columns < 8
     ) {
         return;
     }
