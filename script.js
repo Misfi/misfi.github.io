@@ -132,7 +132,7 @@ function updateCellDisplayText() {
     }
 }
 
-function wipeMines() {
+function resetMinefield() {
     minefield = [];
     mineLocation = [];
 }
@@ -356,7 +356,7 @@ function restartGame() {
         }, 1000);
     }
 
-    wipeMines();
+    resetMinefield();
     preventClickingAfterGameEnds();
     createEventListeners();
     initializeGame();
