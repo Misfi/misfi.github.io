@@ -225,7 +225,7 @@ function leftClick(event) {
             gameOver();
             return;
         } else {
-            if (cell.value > 0 && remainingCoveredCells === 1) {
+            if (cell.value > 0 && remainingCoveredCells <= 1) {
                 winGame();
             } else if (!isGameOn) {
                 startGame();
