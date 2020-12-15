@@ -69,8 +69,9 @@ function createNewMinefield() {
 
 function populateMinefield() {
     let minesLeftToDistribute = selectedDifficulty.mines;
+    let iterationLimit = 5000;
 
-    while (minesLeftToDistribute) {
+    while (minesLeftToDistribute && iterationLimit) {
         const row = getRandomValue(selectedDifficulty.rows);
         const column = getRandomValue(selectedDifficulty.columns);
         const cell = minefield[row][column];
@@ -85,6 +86,7 @@ function populateMinefield() {
                 column: column
             });
         }
+        iterationLimit--;
     }
 }
 
