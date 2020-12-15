@@ -121,9 +121,14 @@ function renderMinefield() {
 function resizeMinefield() {
     let card = document.querySelector(".card");
 
+    /* Needs actual card dimensions (instead of auto) to enable smooth resize transition on difficulty change */
+    /* After switching difficulty, inner elements dimensions are summed with extra paddings/margins/borders  */
+    /* Height also takes card header into account */
+
     card.style["height"] = document.querySelector(".minefield").offsetHeight + 71.4 + "px";
     card.style["width"] = document.querySelector(".row-0").offsetWidth + 10 + "px";
 }
+
 
 function updateCellDisplayText() {
     for (let i = 0; i < selectedDifficulty.rows; i++) {
