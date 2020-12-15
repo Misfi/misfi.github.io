@@ -104,7 +104,7 @@ function renderMinefield() {
     for (let i = 0; i < selectedDifficulty.rows; i++) {
         let newElementTR = document.createElement("TR");
 
-        newElementTR.classList.add(`row-${i}`);
+        newElementTR.classList.add(`row-${i}`, `refresh`);
         MINEFIELD_TABLE.appendChild(newElementTR);
 
         for (let j = 0; j < selectedDifficulty.columns; j++) {
@@ -270,8 +270,7 @@ function uncoverSingleCell(row, column) {
     const span = document.getElementById(`span-${row}-${column}`);
 
     span.appendChild(uncoveredNode);
-    cell.classList.add("uncovered");
-    cell.classList.add(`value-${minefield[row][column].value}`);
+    cell.classList.add(`uncovered`, `value-${minefield[row][column].value}`);
     minefield[row][column].isUncovered = true;
     --remainingCoveredCells;
 
@@ -314,7 +313,7 @@ function explodeAllNotFlaggedMines() {
             if (!minefield[location.row][location.column].isFlagged) {
                 document.getElementById(`span-${location.row}-${location.column}`).innerText = '💥';
                 const span = document.getElementById(`span-${location.row}-${location.column}`);
-                span.classList.add("explode-animation");
+                span.classList.add("explode");
             }
         } else {
             clearInterval(explodeIntervalID);
@@ -326,7 +325,7 @@ function winGame() {
     stopTimer();
     preventClickingAfterGameEnds();
     RESTART_BUTTON.innerText = '🏆';
-    document.querySelector(".win-container").classList.add("win-in-animation");
+    document.querySelector(".win-container").classList.add("win-in");
 }
 
 function preventClickingAfterGameEnds() {
@@ -338,7 +337,7 @@ function preventClickingAfterGameEnds() {
 }
 
 function restartGame() {
-    let winElement = document.querySelector(".win-container").classList;
+    let winElement = document.querySelector(".win-container");
 
     stopTimer();
     resetTimer();
@@ -350,11 +349,11 @@ function restartGame() {
     REMAINING_MINES_COUNTER.innerText = String(remainingMines);
     remainingCoveredCells = selectedDifficulty.columns * selectedDifficulty.rows - selectedDifficulty.mines;
 
-    if (winElement.contains("win-in-animation")) {
-        document.querySelector(".win-container").classList.remove("win-in-animation");
-        document.querySelector(".win-container").classList.add("win-out-animation");
+    if (winElement.classList.contains("win-in")) {
+        winElement.classList.remove("win-in");
+        winElement.classList.add("win-out");
         setTimeout(() => {
-            document.querySelector(".win-container").classList.remove("win-out-animation");
+            winElement.classList.remove("win-out");
         }, 1000);
     }
 
