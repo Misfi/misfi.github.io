@@ -295,7 +295,8 @@ function uncoverSingleCell(row, column) {
     if (minefield[row][column].value === 0) {
         uncoverAdjacentCells(row, column);
     }
-    if (remainingCoveredCells === 0) {
+
+    if (isGameOn && remainingCoveredCells === 0) {
         winGame();
     }
 }
@@ -311,6 +312,7 @@ function uncoverAdjacentCells(row, column) {
 }
 
 function gameOver() {
+    isGameOn = false;
     RESTART_BUTTON.innerText = '☠️';
     stopTimer();
     preventClickingAfterGameEnds();
