@@ -2,18 +2,21 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Jura:wght@500&display=swap');
 
-$body-background: #483d8b;
-$statistics-background: #ffffff;
+$body: #483d8b;
+$statistics: #ffffff;
 $primary: #c2c3c8;
 $cell-uncovered: #e3e3e3;
 $cell-hover: #acb5b8;
-$heading: #ffffff;
 $input-valid: #28a745;
 $input-invalid: #dc3545;
 
 $cell-size: 40px;
 $nav-elem-width: 120px;
 $font-family: 'Jura', sans-serif;
+
+//
+// ADJACENT MINES INDICATORS
+//
 
 .value-1 { color: #0000ff; }
 .value-2 { color: #008000; }
@@ -24,17 +27,15 @@ $font-family: 'Jura', sans-serif;
 .value-7 { color: #000000; }
 .value-8 { color: #808080; }
 
+//
+// PAGE BODY & HEADINGS
+//
+
 * {
   box-sizing: border-box;
   font-family: $font-family;
   margin: 0;
   padding: 0;
-}
-
-h1,
-h2,
-h4 {
-  color: $heading;
 }
 
 html {
@@ -43,7 +44,7 @@ html {
 }
 
 body {
-  background: $body-background;
+  background: $body;
   display: flex;
   height: 100%;
 }
@@ -57,16 +58,15 @@ main {
   overflow-x: hidden;
 }
 
-/*
-tr {
-
-  &:not(:last-child) {
-    td {
-      border-bottom: 1px;
-    }
-  }
+h1,
+h2,
+h4 {
+  color: #ffffff;
 }
-*/
+
+a:hover {
+  text-decoration: none;
+}
 
 .custom-flex {
   align-content: center;
@@ -76,11 +76,40 @@ tr {
   justify-items: center;
 }
 
+.win-container {
+  align-items: center;
+  background: #8d9842;
+  border: 4px solid #2c7f64;
+  border-radius: 30px;
+  display: none;
+  height: 80px;
+  justify-content: center;
+  opacity: 0;
+  position: absolute;
+  width: 250px;
+
+  .win-text {
+    display: inline-block;
+
+    .win-emoji-mirror {
+      display: inline-block;
+      transform: scaleX(-1);
+    }
+  }
+}
+
+//
+// GAME CONTAINER
+//
+
 .card {
   background: $primary;
   display: flex;
+  height: 433px;
   margin: 7px;
+  overflow: hidden;
   padding: 3px;
+  width: 370px;
 
   .card-header {
     background: $primary;
@@ -93,6 +122,7 @@ tr {
   }
 }
 
+// noinspection CssBrowserCompatibilityForProperties
 .minefield {
   background: $cell-uncovered;
   display: block;
@@ -105,9 +135,79 @@ tr {
   }
 }
 
-.uncovered {
-  background: $cell-uncovered;
+//
+// GAME NAVBAR
+//
+
+.custom-select {
+  width: $nav-elem-width;
 }
+
+.statistics {
+  background: $statistics;
+  width: $nav-elem-width;
+
+  > div {
+    margin: auto;
+  }
+}
+
+.restart {
+  cursor: pointer;
+  font-size: 25px;
+  margin: auto;
+}
+
+//
+// CUSTOM GAME MODAL
+//
+
+input {
+  &:valid {
+    border-left: 5px solid $input-valid;
+  }
+
+  &:invalid {
+    border-left: 5px solid $input-invalid;
+  }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type=number] {
+    -moz-appearance: textfield;
+  }
+}
+
+.max-mines-alert {
+  margin: 0;
+  max-height: 0;
+  padding: 0;
+  transition: max-height 150ms;
+  visibility: hidden;
+
+  p {
+    margin: 0;
+  }
+}
+
+.visible {
+  margin: 16px 0 0;
+  max-height: 150px;
+  padding: 8px;
+  visibility: initial;
+}
+
+.close span {
+  font-size: 30px;
+}
+
+//
+// MINEFIELD CELLS
+//
 
 td {
   background: $primary;
@@ -135,115 +235,55 @@ td {
   }
 }
 
-.custom-select {
-  width: $nav-elem-width;
+.uncovered {
+  background: $cell-uncovered;
 }
 
-input {
-  &:valid {
-    border-left: 5px solid $input-valid;
-  }
+//
+//  ANIMATIONS
+//
 
-  &:invalid {
-    border-left: 5px solid $input-invalid;
-  }
-
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  &[type=number] {
-    -moz-appearance: textfield;
-  }
-}
-
-.close span {
-  font-size: 30px;
-}
-
-.restart {
-  cursor: pointer;
-  font-size: 25px;
-  margin: auto;
-}
-
-.statistics {
-  background: $statistics-background;
-  width: $nav-elem-width;
-
-  > div {
-    margin: auto;
-  }
-}
-
-a:hover {
-  text-decoration: none;
-}
-
-.explode-animation {
-  animation: explosion 1000ms;
-}
-
-@keyframes explosion {
+@keyframes explode {
   0% { transform: scale(0.5); }
   50% { transform: scale(2); }
-  100% { transform: scale(1); }
 }
 
-.win-container {
-  align-items: center;
-  background: #8D9842;
-  border: 4px solid #2C7F64;
-  border-radius: 30px;
-  height: 80px;
-  justify-content: center;
-  display: none;
-  position: absolute;
-  width: 250px;
-
-  .win-text {
-    display: inline-block;
-
-    .win-emoji-mirror {
-      display: inline-block;
-      transform: scaleX(-1);
-    }
-  }
+.explode {
+  animation: explode 1000ms;
 }
 
-.win-in-animation {
-  animation: win 1000ms forwards;
+@keyframes win-in {
+  0% { transform: translateX(5000px); }
+  80% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.win-in {
+  animation: win-in 800ms forwards;
   display: flex;
-}
-
-.win-out-animation {
-  animation: win-out 1000ms forwards;
-  display: flex;
-}
-
-@keyframes win {
-  0% {
-    transform: translateX(5000px);
-  }
-
-  80% {
-    opacity: 0.5;
-  }
-
-  100% {
-    opacity: 1;
-  }
 }
 
 @keyframes win-out {
-  0% {
-    opacity: 1;
-  }
+  0% { opacity: 1;}
+  50% { opacity: 0; }
+  100% { transform: translateX(-5000px); }
+}
 
-  100% {
-    opacity: 0;
-    transform: translateX(-5000px);
-  }
+.win-out {
+  animation: win-out 800ms forwards;
+  display: flex;
+}
+
+@keyframes refresh {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.refresh {
+  animation: refresh 150ms ease-out;
+}
+
+.stretch {
+  transition: width 110ms, height 110ms;
 }
