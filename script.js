@@ -245,15 +245,12 @@ function leftClick(event) {
     if (!cell.isUncovered && !cell.isFlagged) {
         if (cell.isMine) {
             gameOver();
-            return;
         } else {
-            if (cell.value > 0 && remainingCoveredCells <= 1) {
-                winGame();
-            } else if (!isGameOn) {
+            if (!isGameOn) {
                 startGame();
             }
+            uncoverSingleCell(row, column);
         }
-        uncoverSingleCell(row, column);
     }
 }
 
@@ -296,6 +293,9 @@ function uncoverSingleCell(row, column) {
 
     if (minefield[row][column].value === 0) {
         uncoverAdjacentCells(row, column);
+    }
+    if (remainingCoveredCells === 0) {
+        winGame();
     }
 }
 
