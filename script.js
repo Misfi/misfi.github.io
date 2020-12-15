@@ -37,6 +37,7 @@ let mineLocation = [];
 let minefield = [];
 
 initializeGame();
+allowHorizontalClickAndDrag();
 
 function initializeGame() {
     switchEmojiToCool();
@@ -381,4 +382,29 @@ function restartGame() {
     preventClickingAfterGameEnds();
     createEventListeners();
     initializeGame();
+}
+
+/* For smaller desktop screens */
+function allowHorizontalClickAndDrag() {
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    MINEFIELD_TABLE.addEventListener('mousedown', (event) => {
+        isDown = true;
+        startX = event.pageX - MINEFIELD_TABLE.offsetLeft;
+        scrollLeft = MINEFIELD_TABLE.scrollLeft;
+    });
+
+    MINEFIELD_TABLE.addEventListener('mouseup', () => {
+        isDown = false;
+    });
+
+    MINEFIELD_TABLE.addEventListener('mousemove', (event) => {
+        if (isDown) {
+            const x = event.pageX - MINEFIELD_TABLE.offsetLeft;
+            const walk = (x - startX) * 2;
+            MINEFIELD_TABLE.scrollLeft = scrollLeft - walk;
+        }
+    });
 }
