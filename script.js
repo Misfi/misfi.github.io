@@ -118,6 +118,13 @@ function renderMinefield() {
     }
 }
 
+function resizeMinefield() {
+    let card = document.querySelector(".card");
+
+    card.style["height"] = document.querySelector(".minefield").offsetHeight + 71.4 + "px";
+    card.style["width"] = document.querySelector(".row-0").offsetWidth + 10 + "px";
+}
+
 function updateCellDisplayText() {
     for (let i = 0; i < selectedDifficulty.rows; i++) {
         for (let j = 0; j < selectedDifficulty.columns; j++) {
@@ -145,6 +152,7 @@ function switchDifficulty() {
     } else {
         selectedDifficulty = difficulty[DIFFICULTY_SELECTOR.value.toUpperCase()];
         restartGame();
+        resizeMinefield();
     }
     DIFFICULTY_SELECTOR.selectedIndex = 0;
 }
