@@ -163,22 +163,29 @@ function startGame() {
 }
 
 function startCustomGame(event) {
-    selectedDifficulty = difficulty.CUSTOM;
-    selectedDifficulty.mines = document.getElementById("custom-input-mines").value;
-    selectedDifficulty.rows = document.getElementById("custom-input-rows").value;
-    selectedDifficulty.columns = document.getElementById("custom-input-columns").value;
+    let mines = document.getElementById("custom-input-mines").value;
+    let rows = document.getElementById("custom-input-rows").value;
+    let columns = document.getElementById("custom-input-columns").value;
+    let mineLimit = rows * columns;
 
-    if (
-        selectedDifficulty.mines < 1
-        || selectedDifficulty.rows < 3
-        || selectedDifficulty.columns < 8
-    ) {
+    if (mines < 1 || rows < 3 || columns < 8) {
         return;
     }
 
-    $('#custom-settings-modal').modal('hide');
+    if (mines > mineLimit) {
+        document.querySelector(".max-mines-alert").classList.add("visible");
+        document.querySelector(".max-mines").innerText = mineLimit;
+    } else {
+        document.querySelector(".max-mines-alert").classList.remove("visible");
+        selectedDifficulty = difficulty.CUSTOM;
+        selectedDifficulty.mines = mines;
+        selectedDifficulty.rows = rows;
+        selectedDifficulty.columns = columns;
+        $('#custom-settings-modal').modal('hide');
+        restartGame();
+        resizeMinefield();
+    }
     event.preventDefault();
-    restartGame();
 }
 
 function startTimer() {
