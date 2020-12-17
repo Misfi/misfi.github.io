@@ -10,3 +10,5 @@
 /.idea/watcherTasks.xml
 /.idea/scssLintPlugin.xml
 /.sass-cache/433371e08b34e54d1f8f814eeae1bcce10da8c57/style.scssc
+/.stylelintrc.json
+/.idea/stylesheetLinters/stylelint.xml
