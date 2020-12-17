@@ -1,3 +1,4 @@
+/* stylelint-disable color-hex-length */
 @import url("https://fonts.googleapis.com/css2?family=Jura:wght@500&display=swap");
 .value-1 {
   color: #0000ff;
@@ -123,15 +124,15 @@ a:hover {
   margin: auto;
 }
 
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 input:valid {
   border-left: 5px solid #28a745;
 }
 input:invalid {
   border-left: 5px solid #dc3545;
-}
-input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
 }
 input[type=number] {
   -moz-appearance: textfield;
@@ -173,13 +174,13 @@ td {
 td span {
   display: inline-block;
 }
-td:not(.uncovered):hover {
-  background: #acb5b8;
-  cursor: pointer;
-}
 td:hover {
   background: initial;
   cursor: initial;
+}
+td:not(.uncovered):hover {
+  background: #acb5b8;
+  cursor: pointer;
 }
 
 .uncovered {

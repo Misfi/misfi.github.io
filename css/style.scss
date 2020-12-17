@@ -1,4 +1,4 @@
-// scss-lint:disable ColorVariable, HexLength, LeadingZero
+/* stylelint-disable color-hex-length */
 
 @import url('https://fonts.googleapis.com/css2?family=Jura:wght@500&display=swap');
 
@@ -141,18 +141,18 @@ a:hover {
 //
 
 input {
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
   &:valid {
     border-left: 5px solid $input-valid;
   }
 
   &:invalid {
     border-left: 5px solid $input-invalid;
-  }
-
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
   }
 
   &[type=number] {
@@ -202,14 +202,14 @@ td {
     display: inline-block;
   }
 
-  &:not(.uncovered):hover {
-    background: $cell-hover;
-    cursor: pointer;
-  }
-
   &:hover {
     background: initial;
     cursor: initial;
+  }
+
+  &:not(.uncovered):hover {
+    background: $cell-hover;
+    cursor: pointer;
   }
 }
 
@@ -256,7 +256,7 @@ td {
 }
 
 @keyframes win-out {
-  0% { opacity: 1;}
+  0% { opacity: 1; }
   50% { opacity: 0; }
   100% { transform: translateX(-5000px); }
 }
