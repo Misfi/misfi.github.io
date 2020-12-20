@@ -2,13 +2,12 @@
  *
  * Author: Filip Misiło
  *
-*/
+ */
 
 const difficulty = {
     BEGINNER: {mines: 10, rows: 9, columns: 9},
     INTERMEDIATE: {mines: 40, rows: 16, columns: 16},
     EXPERT: {mines: 99, rows: 16, columns: 30},
-    CUSTOM: {mines: 0, rows: 0, columns: 0}
 }
 
 class Cell {
@@ -38,6 +37,7 @@ let minefield = [];
 
 initializeGame();
 allowHorizontalClickAndDrag();
+console.log("Don't cheat :-)");
 
 function initializeGame() {
     switchEmojiToCool();
@@ -111,6 +111,7 @@ function renderMinefield() {
         for (let j = 0; j < selectedDifficulty.columns; j++) {
             let newElementTD = document.createElement("TD");
             let newElementSPAN = document.createElement("SPAN");
+
             newElementTD.id = `cell-${i}-${j}`;
             newElementSPAN.id = `span-${i}-${j}`;
             newElementTD.appendChild(newElementSPAN);
@@ -122,14 +123,13 @@ function renderMinefield() {
 function resizeMinefield() {
     let card = document.querySelector(".card");
 
-    /* Needs actual card dimensions (instead of auto) to enable smooth resize transition on difficulty change */
+    /* Needs actual card dimensions (instead of auto) to enable smooth resize animation on difficulty change */
     /* After switching difficulty, inner elements dimensions are summed with extra paddings/margins/borders  */
     /* Height also takes card header into account */
 
     card.style["height"] = document.querySelector(".minefield").offsetHeight + 71.4 + "px";
     card.style["width"] = document.querySelector(".row-0").offsetWidth + 10 + "px";
 }
-
 
 function updateCellDisplayText() {
     for (let i = 0; i < selectedDifficulty.rows; i++) {
@@ -183,10 +183,11 @@ function startCustomGame(event) {
         document.querySelector(".max-mines").innerText = mineLimit;
     } else {
         document.querySelector(".max-mines-alert").classList.remove("visible");
-        selectedDifficulty = difficulty.CUSTOM;
-        selectedDifficulty.mines = mines;
-        selectedDifficulty.rows = rows;
-        selectedDifficulty.columns = columns;
+        selectedDifficulty = {
+            mines: mines,
+            rows: rows,
+            columns: columns
+        };
         $('#custom-settings-modal').modal('hide');
         restartGame();
         resizeMinefield();
@@ -304,7 +305,9 @@ function uncoverSingleCell(row, column) {
 function uncoverAdjacentCells(row, column) {
     for (let i = row - 1; i <= row + 1; i++) {
         for (let j = column - 1; j <= column + 1; j++) {
-            if (isWithinBounds(i, j) && !minefield[i][j].isUncovered && !minefield[i][j].isFlagged) {
+            if (isWithinBounds(i, j)
+                && !minefield[i][j].isUncovered
+                && !minefield[i][j].isFlagged) {
                 uncoverSingleCell(i, j);
             }
         }
